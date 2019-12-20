@@ -7,7 +7,7 @@ jobs:
       steps:
         - checkout
         - run:
-          name: "hello build"
+          name: Build packages with docker-compose and push to registry
           command: |
             cd docker
             chmod +x build_push_docker.sh
