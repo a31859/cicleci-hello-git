@@ -8,7 +8,7 @@ jobs:
       - checkout
       - run:
         name: Build packages with docker-compose and push to registry
-        command: |-
+        command: |
           cd docker
           chmod +x build_push_docker.sh
           ./build_push_docker.sh
