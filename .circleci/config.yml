@@ -19,7 +19,7 @@ jobs:
       build:
         jobs:
           - build_hello:
-          filters:
-            branches:
-              only:
-                - develop
+            filters:
+              branches:
+                only:
+                  - develop
