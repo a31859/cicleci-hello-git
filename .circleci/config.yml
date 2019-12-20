@@ -12,13 +12,3 @@ jobs:
             cd docker
             chmod +x build_push_docker.sh
             ./build_push_docker.sh
-
-  workflows:
-    version:
-      build:
-        jobs:
-          - build_hello:
-            filters:
-              branches:
-                only:
-                  - develop
