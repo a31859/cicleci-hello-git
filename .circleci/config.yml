@@ -5,8 +5,7 @@ jobs:
       docker:
         - image: circleci/node:12.13.1
       steps:
-        - checkout:
-          path: ~/hello
+        - checkout
         - run:
           name: "hello build"
           command: |
