@@ -1,0 +1,14 @@
+version: '3.6'
+services:
+  hello-api:
+    build: '../packages/hello'
+    image: delioamaral/circleci-test:${HELLO_PACKAGE_VERSION}
+    container_name: hello-package
+    restart: always
+    networks:
+      - hello-network
+    expose:
+      - "3000"
+networks:
+  hello-network:
+    driver: bridge

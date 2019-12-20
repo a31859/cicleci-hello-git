@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build_hello:
+      working_directory: ~/hello
+      docker:
+        - image: circleci/node:12.13.1
+      steps:
+        - checkout:
+          path: ~/hello
+        - run:
+          name: "hello build"
+          command: |
+            cd docker
+            chmod +x build_push_docker.sh
+            ./build_push_docker.sh
+
+  workflows:
+    version:
+      build:
+        jobs:
+          - build_hello:
+          filters:
+            branches:
+              only:
+                - develop
