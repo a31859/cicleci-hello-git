@@ -2,13 +2,22 @@ version: '3.2'
 services:
   hello-api:
     build: '../packages/hello'
-    image: delioamaral/circleci-test:${HELLO_PACKAGE_VERSION}
+    image: ${DOCKER_REPO}:${HELLO_PACKAGE_TAG}
     container_name: hello-package
     restart: always
     networks:
       - hello-network
-    expose:
-      - "3000"
+    ports:
+      - "3001:3001"
+  hello2-api:
+    build: '../packages/hello2'
+    image: ${DOCKER_REPO}:${HELLO_2_PACKAGE_TAG}
+    container_name: hello-2-package
+    restart: always
+    networks:
+      - hello-network
+    ports:
+      - "3001:3001"
 networks:
   hello-network:
     driver: bridge

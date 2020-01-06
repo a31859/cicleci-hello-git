@@ -2,8 +2,8 @@ version: 2
 jobs:
   build_hello:
       working_directory: ~/hello
-      machine:
-        image: true
+      docker:
+        - image: circleci/node:12.13.1
       steps:
         - checkout
         - run:
