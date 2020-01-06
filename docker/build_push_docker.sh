@@ -22,6 +22,7 @@ if [ "${CIRCLE_BRANCH}" != "develop" ]; then
 fi
 
 # write envs to .env
+echo "DOCKER_REPO=${DOCKER_REPO}" >> .env
 echo "HELLO_PACKAGE_TAG=hello-${HELLO_PACKAGE_VERSION}" >> .env
 echo "HELLO_2_PACKAGE_TAG=hello2-${HELLO_2_PACKAGE_VERSION}" >> .env
 
