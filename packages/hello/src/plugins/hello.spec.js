@@ -1,4 +1,4 @@
-const { before, after, describe, it } = exports.lab = require('lab').script()
+const { before, after, describe, it } = exports.lab = require('@hapi/lab').script()
 const { expect } = require('code')
 
 const Hapi = require('@hapi/hapi')
