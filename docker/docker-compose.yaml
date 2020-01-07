@@ -11,7 +11,7 @@ services:
       - "3001:3001"
   hello2-api:
     build: '../packages/hello2'
-    image: ${DOCKER_REPO}:${HELLO_2_PACKAGE_TAG}
+    image: ${DOCKER_REPO}:${HELLO2_PACKAGE_TAG}
     container_name: hello-2-package
     restart: always
     networks:
