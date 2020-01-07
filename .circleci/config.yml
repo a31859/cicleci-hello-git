@@ -9,6 +9,7 @@ jobs:
         - run:
             name: Build packages with docker-compose and push to registry
             command: |
+              apt-get install ruby-full jq
               cd docker
               chmod +x build_push_docker.sh
               ./build_push_docker.sh
