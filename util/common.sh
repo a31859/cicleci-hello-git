@@ -25,8 +25,8 @@ if [[ ${LAST_SUCCESSFUL_COMMIT} == "null" ]]; then
 else
   COMMITS="${CIRCLE_SHA1}..${LAST_SUCCESSFUL_COMMIT}"
 fi
-# Filter result and only list the project folders that where updated $COMMITS
-PROJECTS=$(git diff --name-only origin/master | grep "${ROOT_PROJECTS_FOLDER}" | cut -d/ -f2 | sort -u)
+# Filter result and only list the project folders that where updated
+PROJECTS=$(git diff --name-only $COMMITS | grep "${ROOT_PROJECTS_FOLDER}" | cut -d/ -f2 | sort -u)
 echo -e "Modified directories:\n`echo ${PROJECTS}`\n"
 
 # Convert the project list to an array
