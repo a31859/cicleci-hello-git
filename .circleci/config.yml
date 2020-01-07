@@ -38,5 +38,5 @@ workflows:
                   only:
                     - develop
             requires:
-                - test
+                - test_hello
 
