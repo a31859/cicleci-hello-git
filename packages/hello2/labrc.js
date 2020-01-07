@@ -9,4 +9,5 @@ module.exports = {
 	shuffle: true,
 	timeout: 4000,
 	verbose: true,
+	ignore: true,
 }
