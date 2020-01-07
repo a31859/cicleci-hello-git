@@ -58,7 +58,7 @@ else
   COMMITS="${CIRCLE_SHA1}..${LAST_SUCCESSFUL_COMMIT}"
 fi
 # Filter result and only list the project folders that where updated
-PROJECTS=$(git diff --name-only origin/$COMMITS | grep "${ROOT_PROJECTS_FOLDER}" | cut -d/ -f2 | sort -u)
+PROJECTS=$(git diff --name-only $COMMITS | grep "${ROOT_PROJECTS_FOLDER}" | cut -d/ -f2 | sort -u)
 echo -e "Modified directories:\n`echo ${PROJECTS}`\n"
 
 # Get the projects folder name to build
