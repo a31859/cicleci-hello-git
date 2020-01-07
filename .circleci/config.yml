@@ -3,18 +3,18 @@ jobs:
   build_hello:
       working_directory: ~/hello
       docker:
-          - image: circleci/node:12.13.1
+        - image: circleci/node:12.13.1
       steps:
-          - checkout
-          - run:
-              name: Build packages with docker-compose and push to registry
-              command: |
-                  sudo apt-get install ruby-full jq
-                  cd docker
-                  chmod +x build_push_docker.sh
-                  ./build_push_docker.sh
+        - checkout
+        - run:
+            name: Build packages with docker-compose and push to registry
+            command: |
+              sudo apt-get install ruby-full jq
+              cd docker
+              chmod +x build_push_docker.sh
+              ./build_push_docker.sh
 workflows:
-    version: 2
-    build:
-      jobs:
-          - build_hello
+  version: 2
+  build:
+    jobs:
+    - build_hello
