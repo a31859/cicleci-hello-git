@@ -14,8 +14,10 @@
 
 # For each updated project go into it and run the test
 for project in ${PROJECTS}; do
-  # Go into folder and run npm i
-  (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm i)
-  # Go into folder and run test
-  (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm run test)
+  if [ -n "$project" ]; then
+    # Go into folder and run npm i
+    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm i)
+    # Go into folder and run test
+    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm run test)
+  fi
 done
