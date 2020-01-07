@@ -26,10 +26,10 @@ echo ${DOCKER_USER_PASS} | docker login --username ${DOCKER_USER_NAME} --passwor
 touch .env
 
 # Set docker repo
-DOCKER_REPO=$DOCKER_REPO || "delioamaral/circleci-test"
+DOCKER_REPO=${DOCKER_REPO:-"delioamaral/circleci-test"}
 
 # Set the root directory of projects folder
-ROOT_PROJECTS_FOLDER=$ROOT_PROJECTS_FOLDER || "packages"
+ROOT_PROJECTS_FOLDER=${ROOT_PROJECTS_FOLDER:-"packages"}
 
 # Set the list of projects
 PROJECTS_LIST=$(ls -d ../${ROOT_PROJECTS_FOLDER}/*/ | cut -f3 -d/)
@@ -82,9 +82,9 @@ done
 echo "Services to build: $DOCKER_SERVICES"
 
 # Build and push to docker registry
-# docker-compose config
-docker-compose build $DOCKER_SERVICES
-docker-compose push $DOCKER_SERVICES
+docker-compose config
+# docker-compose build $DOCKER_SERVICES
+# docker-compose push $DOCKER_SERVICES
 
 # Logout from docker
 docker logout
