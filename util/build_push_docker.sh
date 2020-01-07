@@ -28,11 +28,8 @@ touch .env
 # Set docker repo
 DOCKER_REPO=${DOCKER_REPO:-"delioamaral/circleci-test"}
 
-# Set the root directory of projects folder
-ROOT_PROJECTS_FOLDER=${ROOT_PROJECTS_FOLDER:-"packages"}
-
-# Set the list of projects
-PROJECTS_LIST=$(ls -d ../${ROOT_PROJECTS_FOLDER}/*/ | cut -f3 -d/)
+# Run common code
+. ./common.sh
 
 # Write envs to .env
 echo "DOCKER_REPO=${DOCKER_REPO}" >> .env
@@ -47,26 +44,10 @@ for project in ${PROJECTS_LIST}; do
   echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_PACKAGE_TAG=${project}-${PROJECT_PACKAGE_VERSION}" >> .env
 done
 
-# Identify modified directories
-## Get latest succesful build/commit
-LAST_SUCCESSFUL_BUILD_URL="https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH?filter=completed&limit=1"
-LAST_SUCCESSFUL_COMMIT=`curl -Ss -u "$CIRCLE_TOKEN:" $LAST_SUCCESSFUL_BUILD_URL | jq -r '.[0]["vcs_revision"]'`
-
-## First commit in a branch
-if [[ ${LAST_SUCCESSFUL_COMMIT} == "null" ]]; then
-  COMMITS="origin/${CIRCLE_BRANCH}"
-else
-  COMMITS="${CIRCLE_SHA1}..${LAST_SUCCESSFUL_COMMIT}"
-fi
-# Filter result and only list the project folders that where updated $COMMITS
-PROJECTS=$(git diff --name-only origin/master | grep "${ROOT_PROJECTS_FOLDER}" | cut -d/ -f2 | sort -u)
-echo -e "Modified directories:\n`echo ${PROJECTS}`\n"
-
 # Get the projects folder name to build
 # Parse the ymal to json
 PARSED_YAML=$(cat docker-compose.yaml | yaml2json)
-# Convert the project list to an array
-PROJECTS_AS_ARRAY=($(echo ${PROJECTS_LIST}))
+
 for project in ${PROJECTS}; do
   # Remove the project from the array if exist
   CLEANED_PROJECTS_ARRAY=(${PROJECTS_AS_ARRAY[@]/#$project})
@@ -87,4 +68,4 @@ docker-compose config
 # docker-compose push $DOCKER_SERVICES
 
 # Logout from docker
-docker logout
+# docker logout
