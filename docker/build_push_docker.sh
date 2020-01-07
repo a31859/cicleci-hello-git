@@ -33,7 +33,6 @@ ROOT_PROJECTS_FOLDER="packages"
 
 # Set the list of projects
 PROJECTS_LIST=$(ls -d ../${ROOT_PROJECTS_FOLDER}/*/ | cut -f3 -d/)
-echo $PROJECTS_LIST
 
 # Write envs to .env
 echo "DOCKER_REPO=${DOCKER_REPO}" >> .env
