@@ -10,6 +10,7 @@
     "start": "NODE_PATH=. node src/index.js",
     "lint": "eslint src/ --ext .js",
     "audit": "npm audit",
+    "test": "lab ./src --pattern 'spec'",
     "debug": "NODE_PATH=. node src/index.js | bunyan"
   },
   "pre-commit": [
@@ -25,7 +26,9 @@
     "bunyan": "^1.8.12"
   },
   "devDependencies": {
+    "code": "^5.2.0",
     "eslint": "^4.19.1",
+    "lab": "^18.0.2",
     "pre-commit": "^1.2.2"
   }
 }
