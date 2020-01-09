@@ -3,7 +3,7 @@ version: 2.1
 executors:
   hello-executor:
     docker:
-      - image: circle/node:12.13.1
+      - image: circleci/node:12.13.1
     working_directory: ~/hello
 
 jobs:
