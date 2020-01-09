@@ -47,8 +47,8 @@ jobs:
             name: Fake deploy
             command: |
               cd ./util && ls -lah
-              docker-compose config > docker-compose.yaml
-              cat docker-compose.yaml
+              cat .env
+              docker-compose config
 
 workflows:
   version: 2
