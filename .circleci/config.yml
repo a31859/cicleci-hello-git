@@ -1,25 +1,30 @@
-version: 2
+version: 2.1
+
+executors:
+  hello-executor:
+    docker:
+      - image: circle/node:12.13.1
+    working_directoruy: ~/hello
+
 jobs:
   test_hello:
-      working_directory: ~/hello
-      docker:
-        - image: circleci/node:12.13.1
+      executor: hello-executor
       steps:
         - checkout
         - run:
-            name: Build packages with docker-compose and push to registry
+            name: Run tests
             command: |
+              sudo apt-get install jq
               cd util
               chmod +x common.sh
               chmod +x run_tests.sh
               ./run_tests.sh
 
   build_hello:
-      working_directory: ~/hello
-      docker:
-        - image: circleci/node:12.13.1
+      executor: hello-executor
       steps:
         - checkout
+        - setup_remote_docker
         - run:
             name: Build packages with docker-compose and push to registry
             command: |
@@ -27,6 +32,23 @@ jobs:
               cd util
               chmod +x build_push_docker.sh
               ./build_push_docker.sh
+        - persist_to_workspace:
+              root: ./util
+              paths:
+                - .env
+
+  deploy_hello:
+      executor: hello-executor
+      steps:
+        - checkout
+        - attach_workspace:
+            at: ./util
+        - run:
+            name: Fake deploy
+            command: |
+              cd ./util/ && ls -lah
+              cat ./util/docker-compose.yaml
+
 workflows:
   version: 2
   build:
@@ -39,4 +61,10 @@ workflows:
                     - develop
             requires:
                 - test_hello
-
+        - deploy_hello:
+            filters:
+                branches:
+                  only:
+                    - develop
+            requires:
+                - build_hello

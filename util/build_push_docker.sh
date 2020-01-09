@@ -1,12 +1,14 @@
 #!/usr/bin/env bash
 
+set -e
+
 ###################################################################
 # Script Name : build_push_docker.sh
 # Description	: Will create the necessary environment variables, \
 #               identify the services to build (monorepo) and call docker compose to \
 #               build and push for those services
 # Args        : -
-# Author      : Délio Amaral
+# Author      : Délio Amaral (C) 2019 - cloudoki
 # Email       : delio@cloudoki.com
 ###################################################################
 
@@ -17,7 +19,7 @@ function yaml2json()
 }
 
 # Remove .env if exits
-rm .env
+rm .env || true
 
 # Login into docker hub
 echo ${DOCKER_USER_PASS} | docker login --username ${DOCKER_USER_NAME} --password-stdin
@@ -40,7 +42,7 @@ for project in ${PROJECTS_LIST}; do
   if [ "${CIRCLE_BRANCH}" != "develop" ]; then
     PROJECT_PACKAGE_VERSION=$(cat ../${ROOT_PROJECTS_FOLDER}/${project}/package.json | grep version | head -1 | awk -F ": " '{ print $2 }' | sed 's/[",]//g')
   fi
-  echo "Creating the var for $(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_PACKAGE_TAG"
+  echo "Creating the var for $(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG"
   echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_PACKAGE_TAG=${project}-${PROJECT_PACKAGE_VERSION}" >> .env
 done
 
@@ -60,12 +62,18 @@ for project in ${PROJECTS}; do
   fi
 done
 
-echo "Services to build: $DOCKER_SERVICES"
-
 # Build and push to docker registry
-docker-compose config
-# docker-compose build $DOCKER_SERVICES
-# docker-compose push $DOCKER_SERVICES
+# docker-compose config
+if [[ -n ${DOCKER_SERVICES// } ]]; then
+  echo "Services to build: $DOCKER_SERVICES"
+  docker-compose config
+  # docker-compose build $DOCKER_SERVICES
+  # docker-compose push $DOCKER_SERVICES
+else
+  echo "No services listed will not build and push"
+  # docker-compose build $DOCKER_SERVICES
+  # docker-compose push $DOCKER_SERVICES
+fi
 
 # Logout from docker
-# docker logout
+docker logout

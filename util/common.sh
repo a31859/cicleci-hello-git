@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+set -e
+
 ###################################################################
 # Script Name : common.sh
-# Description	: Has common code used by multiple scripts
+# Description	: Has common code that is used by multiple scripts
 # Args        : -
-# Author      : Délio Amaral
+# Author      : Délio Amaral (C) 2019 - cloudoki
 # Email       : delio@cloudoki.com
 ###################################################################
 
@@ -32,6 +34,7 @@ echo -e "Modified directories:\n`echo ${PROJECTS}`\n"
 # Convert the project list to an array
 PROJECTS_AS_ARRAY=($(echo ${PROJECTS_LIST}))
 
+# Export var to be used in other scripts
 export ROOT_PROJECTS_FOLDER
 export PROJECTS_LIST
 export PROJECTS
