@@ -4,7 +4,7 @@ executors:
   hello-executor:
     docker:
       - image: circle/node:12.13.1
-    working_directoruy: ~/hello
+    working_directory: ~/hello
 
 jobs:
   test_hello:
