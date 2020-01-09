@@ -22,6 +22,8 @@ jobs:
 
   build_hello:
       executor: hello-executor
+      docker:
+        - image: circleci/buildpack-deps:stretch
       steps:
         - checkout
         - setup_remote_docker
