@@ -46,7 +46,7 @@ jobs:
         - run:
             name: Fake deploy
             command: |
-              cd ./util/ && ls -lah
+              ls -lah ./util/
               cat ./util/docker-compose.yaml
 
 workflows:
