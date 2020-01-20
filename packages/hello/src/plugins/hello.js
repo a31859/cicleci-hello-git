@@ -8,7 +8,7 @@ module.exports = {}
 const hello = {
 	handler: async (request, h) => {
 
-		return h.response({ status: 'hello'}).code(200)
+		return h.response({ status: 'hello there'}).code(200)
 
 	},
 	id: 'hello-get',
