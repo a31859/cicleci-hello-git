@@ -5,6 +5,8 @@ executors:
     docker:
       - image: circleci/node:12.13.1
     working_directory: ~/hello
+    environment:
+      SHOULD_RUN_TEST: "false"
 
 jobs:
   test_hello:
@@ -18,12 +20,10 @@ jobs:
               cd util
               chmod +x common.sh
               chmod +x run_tests.sh
-              ./run_tests.sh
+              [[ $SHOULD_RUN_TEST == "false" ]] && echo "Bypass tests" || ./run_tests.sh
 
   build_hello:
       executor: hello-executor
-      docker:
-        - image: circleci/buildpack-deps:stretch
       steps:
         - checkout
         - setup_remote_docker
